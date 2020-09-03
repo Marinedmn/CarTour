@@ -12,8 +12,25 @@ class Race {
     private $players = array();
     private $ranking = array();
 
-    public function addPlayer( $player ) {
+   public function __construct($track, $type, $distance, $weather, $lap = null) {
+        $this->track = $track;
+        $this->type = $type;
+        $this->weather = $weather;
 
+        if( is_int($distance) && $distance > 1000 ) {
+            $this->distance = $distance;
+        }
+        else {
+            $this->distance = 100;
+        }
+        
+        if(is_int($lap) && $lap > 0) {
+            $this->lap = $lap;
+        }
+    }
+
+    public function addPlayer( $player ) {
+        $this->players[] = $player;
     }
 
     public function start() {
@@ -21,6 +38,6 @@ class Race {
     }
 
     public function getRanking() {
-
+        return $this->ranking;
     }
 }
