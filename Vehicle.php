@@ -1,11 +1,12 @@
+<?php 
+
 // Créer une classe représentant une partie/course
 // Créer une classe représentant un joueur
 // Créer une classe représentant un véhicule
 
-<?php 
-
 class Vehicle {
     // Vitesse max
+    const MAX_SPEED = 350;
 
     private $model;
     private $power;
@@ -22,17 +23,21 @@ class Vehicle {
     public function start() {
         $this->engine = true;
     }
+
+    public function isStart() {
+        return $this->engine;
+    }
     
     public function increaseSpeed() {
-        $this->spedd += $this->power;
-        if($this->speed <= 350) {
+        $this->speed += $this->power * 10;
+        if($this->speed >= 350) {
             $this->speed = 350;
         }
         return $this->speed;
     }
 
     public function decreaseSpeed() {
-        $this->spedd -= $this->power;
+        $this->speed -= $this->power * 5;
         if($this->speed < 0) {
             $this->speed = 0;
         }
@@ -57,5 +62,8 @@ class Vehicle {
         $this->engine = false;
     }
 
+    public function getSpeed() {
+        return $this->speed;
+    }
     
 }

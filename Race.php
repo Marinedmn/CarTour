@@ -17,7 +17,7 @@ class Race {
         $this->type = $type;
         $this->weather = $weather;
 
-        if( is_int($distance) && $distance > 1000 ) {
+        if( is_int($distance) && $distance > 100 ) {
             $this->distance = $distance;
         }
         else {
@@ -34,10 +34,35 @@ class Race {
     }
 
     public function start() {
-
+        //$events = [ "3...2...1... Départ !" ];
+        for ( $i = 0; $i < $this->lap; $i++) {
+            $this->simulateLap();
+        }
     }
 
     public function getRanking() {
         return $this->ranking;
+    }
+
+    private function simulateLap() {
+        foreach( $this->players as $player ) {
+            $speed = $player->drive();
+            $thd = ceil($speed / 10 ) + 1;
+            $key = round( $this->distance / $thd );
+
+            $rankKey = array_search( $player, $this->ranking );
+            if( $rankKey ) {
+                unset( $this->ranking[ $rankKey ] ); // unset supprime une case dans le tableau ici supprime le classement
+                $total = $rankKey + $key;
+                $this->ranking[ $total ] = $player;
+            }
+            else {
+                $this->ranking[ $key ] = $player;
+            }
+        }
+    }
+
+    public static function simulateRace() {
+        
     }
 }
